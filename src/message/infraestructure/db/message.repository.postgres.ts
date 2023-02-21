@@ -1,12 +1,19 @@
-import executeQuery from "../../../context/db/postgres.connector";
+//Application entities:
 import Message from "../../domain/Message";
 import MessageRepository from "../../domain/message.repository";
+//SQL:
+import executeQuery from "../../../context/db/postgres.connector";
 
 export default class MessageRepositoryPostgres implements MessageRepository {
     async create(message: Message) {
         try {
-            const currentDate = new Date();
-            const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+            //seting correct format to the message date for the SQL script:
+            const formattedDate = `${message.date.getDate()}/
+            ${message.date.getMonth() + 1}/
+            ${message.date.getFullYear()} 
+            ${message.date.getHours()}:
+            ${message.date.getMinutes()}:
+            ${message.date.getSeconds()}`
             await executeQuery(
                 `insert into messages(text, date)
                 values (
@@ -21,14 +28,14 @@ export default class MessageRepositoryPostgres implements MessageRepository {
         }
     }
 
-    async getUserMessages(transmitter: String, receiver: String): Promise<Message[] | undefined> {
+    async getUserMessages(transmitter: String, receiver: String): Promise<Message[]> {
         const result: any[] = await executeQuery(
             `select * from userMessages where transmitter = ${transmitter} and receiver = ${receiver}`
         )
         return result
     }
 
-    async getGroupMessages(group: String): Promise<Message[] | undefined> {
+    async getGroupMessages(group: String): Promise<Message[]> {
         const result: any[] = await executeQuery(
             `select * from groupMessages where group = ${group}`
         )

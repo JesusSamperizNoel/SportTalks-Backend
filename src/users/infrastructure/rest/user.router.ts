@@ -1,3 +1,4 @@
+//express:
 import express, { Request, Response } from "express";
 //usecases:
 import UserUseCases from "../../application/user.usecases";
@@ -22,7 +23,7 @@ router.get("/", async (res: Response) => {
     } catch (error) {
       const stringResp: String = String(error)
       res.status(500).send(stringResp)
-      }
+    }
 })
 
 router.post("/create", async (req: Request, res: Response) => {

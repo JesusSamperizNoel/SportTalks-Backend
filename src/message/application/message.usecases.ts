@@ -9,15 +9,15 @@ export default class MessageUseCases {
         this.messageRepository = messageRepository
     }
 
-    create(message: Message): Promise<undefined> {
+    create(message: Message): Promise <undefined> {
         return this.messageRepository.create(message)
     }
 
-    getUserMessages(transmitter: String, receiver: String) {
+    getUserMessages(transmitter: String, receiver: String): Promise <Message[]> {
         return this.messageRepository.getUserMessages(transmitter, receiver)
     }
     
-    getGroupMessages(group: String) {
+    getGroupMessages(group: String): Promise <Message[]> {
         return this.messageRepository.getGroupMessages(group)
     }
 }
