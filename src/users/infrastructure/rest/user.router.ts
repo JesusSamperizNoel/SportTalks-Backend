@@ -1,21 +1,21 @@
 import express, { Request, Response } from "express";
 //usecases:
-import UserUseCases from "../../application/usuarios.usecases";
+import UserUseCases from "../../application/user.usecases";
 //repository:
 import UserRepository from "../../domain/user.repository";
-import UserRepositoryPostgres from "../db/usuarios.repository.postgres"
+import UserRepositoryPostgres from "../db/user.repository.postgres"
 //domain:
 import User from "../../domain/User";
+//context:
 import Auth from "../../domain/Auth";
-import Message from "../../../context/responses/Message";
 import { createToken } from "../../../context/security/auth";
-//implementation:
-const userRepository: UserRepository = new UserRepositoryPostgres
-const userUseCases: UserUseCases = new UserUseCases(userRepository)
 //Router: 
 const router = express.Router()
+//Implementation:
+const userRepository: UserRepository = new UserRepositoryPostgres
+const userUseCases: UserUseCases = new UserUseCases(userRepository)
 //Petitions:
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (res: Response) => {
     try {
         const result: any[] = await userUseCases.getAll()
         res.json(result)
@@ -24,7 +24,6 @@ router.get("/", async (req: Request, res: Response) => {
       res.status(500).send(stringResp)
       }
 })
-
 
 router.post("/create", async (req: Request, res: Response) => {
   try {

@@ -6,7 +6,7 @@ import executeQuery from "../../../context/db/postgres.connector"
 
 export default class GroupRepositoryPostgres implements GroupRepository {
     
-    async create(group): Promise<String> {
+    async create(group: Group): Promise<String> {
         try {
             if (group.sport && group.name && group.admin) {
                 await executeQuery(

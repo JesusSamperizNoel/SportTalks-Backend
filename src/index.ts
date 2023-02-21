@@ -14,9 +14,13 @@ const options: cors.CorsOptions = {
 app.use(cors(options))
 
 //Routers:
-import { routerUser } from "./users/infrastructure/rest/usuarios.router";
+import { routerUser } from "./users/infrastructure/rest/user.router";
+import { routerGroup } from "./group/infraestructure/rest/group.router";
+//Router implementation:
+app.use("/user", routerUser)
+app.use("/group", routerGroup)
 
-app.use("/user", routerUser); 
+//Port configuration and message check ok:
 app.listen(process.env.PORT, () => {
-  console.log(`Application started on port ${port}`);
+  console.log(`Application started on port ${port}`)
 });

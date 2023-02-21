@@ -13,7 +13,7 @@ export default class UserRepositoryPostgres implements UserRepository {
                 await executeQuery(
                     `insert into users(password, name, lastName, email, bornDate, sport, description)
                     values (
-                        '${hash(user.password)},'
+                        '${hash(user.password)}',
                         '${user.name}',
                         '${user.lastName}',
                         '${user.email}',
