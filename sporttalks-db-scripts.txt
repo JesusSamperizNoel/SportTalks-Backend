@@ -1,0 +1,57 @@
+-->Este documento contiene los scripts necesarios para crear 
+una base de datos con la estructura correcta y necesaria
+
+create table users (
+	id serial,
+	password character varying (40),
+	name character varying (20),
+	lastName character varying (30),
+	email character varying (40),
+	bornDate timestamp,
+	sport character varying (20),
+	description character varying (200),
+	primary key (id)
+)
+
+create table messages (
+	id serial,
+	text character varying (500),
+	date timestamp
+)
+
+create table groups (
+	id serial,
+	name character varying (500),
+	sport character varying (20),
+	admin bigint,
+	primary key (id),
+	FOREIGN KEY (id) REFERENCES users(id)
+)
+
+create table groupUsers (
+	user bigint,
+	group bigint,
+	primary key (group, user),
+	FOREIGN KEY (group) REFERENCES groups(id),
+	FOREIGN KEY (user) REFERENCES users(id)
+)
+
+create table groupMessages (
+	group bigint,
+	message bigint,
+	transmitter bigint,
+	primary key (group, message, transmitter),
+	FOREIGN KEY (group) REFERENCES groups(id),
+	FOREIGN KEY (message) REFERENCES messages(id),
+	FOREIGN KEY (transmitter) REFERENCES users(id)
+)
+
+create table userMessages (
+	message bigint,
+	transmitter bigint,
+	receiver bigint,
+	primary key (message, transmitter, receiver),
+	FOREIGN KEY (message) REFERENCES messages(id),
+	FOREIGN KEY (transmitter) REFERENCES users(id),
+	FOREIGN KEY (receiver) REFERENCES users(id)
+)
