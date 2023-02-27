@@ -1,2 +1,2 @@
 # SportTalks-Backend
-Backend aplicación SportTalks (proyecto final grado DAW)
+SportTalks backend application (DAW course final project)
