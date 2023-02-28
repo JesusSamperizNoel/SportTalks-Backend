@@ -1,2 +1,2 @@
-# SportTalks-Backend
-Este es el repositorio del backend de la aplicación SportTalks
+# Sport Talks - Backend
+SportTalks backend application (DAW course final project)
