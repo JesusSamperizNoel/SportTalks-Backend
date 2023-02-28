@@ -24,7 +24,7 @@ export default class GroupRepositoryPostgres implements GroupRepository {
         }     
     }
 
-    async getAll(): Promise<Group[]> {
+    async getAll(): Promise<Group[]> {        
         const result: any[] = await executeQuery(
             `select * from groups`
         )

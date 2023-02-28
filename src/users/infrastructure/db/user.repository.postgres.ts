@@ -25,6 +25,7 @@ export default class UserRepositoryPostgres implements UserRepository {
             }
             return `User: ${user.name}, has been created successfully`            
         } catch (error) {
+            console.error(String(error))
             return 'The necessary data has not been correctly provided'
         }     
     }
@@ -42,7 +43,8 @@ export default class UserRepositoryPostgres implements UserRepository {
                 const result: any[] = await executeQuery(`
                         select * 
                         from users 
-                        where name = '${user.name}'`)
+                        where name = '${user.name}'
+                    `)
                 const userFromDB = result[0]
                 if (userFromDB && compare(user.password, userFromDB.password)) {
                     const userOK : User = {

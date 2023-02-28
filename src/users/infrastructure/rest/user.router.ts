@@ -16,7 +16,7 @@ const router = express.Router()
 const userRepository: UserRepository = new UserRepositoryPostgres
 const userUseCases: UserUseCases = new UserUseCases(userRepository)
 //Petitions:
-router.get("/", async (res: Response) => {
+router.get("/", async (req: Request ,res: Response) => {
     try {
         const result: any[] = await userUseCases.getAll()
         res.json(result)
@@ -49,15 +49,10 @@ router.post("/login", async (req: Request, res: Response) => {
   try {
     const user: User = {
       name: req.body.name,
-      password: req.body.password,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      bornDate: req.body.bornDate,
-      sport: req.body.sport,
-      description: req.body.description
+      password: req.body.password
     };
     const loginOK = await userUseCases.login(user)
-    if (loginOK) {
+    if (loginOK) {      
       const token = createToken(loginOK)
       res.json({token})
     } else {

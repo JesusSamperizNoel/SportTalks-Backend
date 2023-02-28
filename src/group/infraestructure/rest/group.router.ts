@@ -7,7 +7,7 @@ import GroupRepositoryPostgres from "../db/group.repository.postgres";
 //domain
 import Group from "../../domain/Group";
 //context:
-import { createToken, isAuth } from "../../../context/security/auth";
+import { isAuth } from "../../../context/security/auth";
 import Auth from "../../../users/domain/Auth";
 //Router:
 const router = express.Router()
@@ -15,10 +15,10 @@ const router = express.Router()
 const groupRepository: GroupRepository = new GroupRepositoryPostgres()
 const groupUseCases: GroupUseCases = new GroupUseCases(groupRepository)
 //Petitions:
-router.get("/", isAuth, async (res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
-      const result: any = await groupUseCases.getAll()
-      res.json(result)
+    const result: any = await groupUseCases.getAll()
+    res.json(result)
   } catch (error) {
     const stringResp: String = String(error)
     res.status(500).send(stringResp)

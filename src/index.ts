@@ -16,9 +16,11 @@ app.use(cors(options))
 //Routers:
 import { routerUser } from "./users/infrastructure/rest/user.router";
 import { routerGroup } from "./group/infraestructure/rest/group.router";
+import { routerMessage } from "./message/infraestructure/rest/message.router";
 //Router implementation:
 app.use("/user", routerUser)
 app.use("/group", routerGroup)
+app.use("/message", routerMessage)
 
 //Port configuration and message check ok:
 app.listen(process.env.PORT, () => {
