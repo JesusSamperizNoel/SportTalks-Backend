@@ -32,7 +32,19 @@ router.post("/create", isAuth, async (req: Request, res: Response) => {
       name: req.body.name,
       sport: req.body.sport
     }
-    const result: Auth | String = await groupUseCases.create(group)    
+    const result = await groupUseCases.create(group)    
+    res.json(result)
+  } catch (error) {
+    const stringResp: String = String(error)
+    res.status(500).send(stringResp)
+  }
+})
+
+router.post("/addUser", isAuth, async (req: Request, res: Response) => {
+  try {
+    const userid = req.body.userid
+    const groupid = req.body.groupname
+    const result = await groupUseCases.addUser(userid, groupid)    
     res.json(result)
   } catch (error) {
     const stringResp: String = String(error)

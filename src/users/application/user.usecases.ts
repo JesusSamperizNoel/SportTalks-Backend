@@ -24,4 +24,8 @@ export default class UserUseCases {
   update(idUser: String, user: User) {
     return this.userRepository.update(idUser, user);
   }
+
+  getTalks(userid: Number) {
+    return this.userRepository.getTalks(userid);
+  }
 }

@@ -67,7 +67,7 @@ export default class UserRepositoryPostgres implements UserRepository {
 
     async update(idUser: String, user: User): Promise<String> {
         try {
-            const result: any[] = await executeQuery(
+            await executeQuery(
                 `update usuarios 
                 set password = '${hash(user.password)}'
                 where id = '${idUser}'`
@@ -75,6 +75,37 @@ export default class UserRepositoryPostgres implements UserRepository {
             return "Updated and saved changes";
         } catch {
             return "Error updating data";
+        }
+    }
+
+    async getTalks(userid: Number): Promise<String[]> {
+        try {            
+            const talksUsers = await executeQuery(
+                `select name 
+                from users
+                where id = (
+                    select receiver
+                    from usermessages
+                    where transmitter = ${userid}       
+                )`
+            )
+            console.log(talksUsers);
+            
+            const talksGroups = await executeQuery(
+                `select name 
+                from groups
+                where id = (
+                    select group
+                    from groupusers
+                    where user = ${userid}
+                )`
+            )
+            const talks = talksUsers.concat(talksGroups) //union of 2 array responses
+            return talks;
+        } catch (error) {
+            console.error(String(error));
+            
+            return ["failed"];
         }
     }
 }

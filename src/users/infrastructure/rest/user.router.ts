@@ -18,12 +18,23 @@ const userUseCases: UserUseCases = new UserUseCases(userRepository)
 //Petitions:
 router.get("/", async (req: Request ,res: Response) => {
     try {
-        const result: any[] = await userUseCases.getAll()
-        res.json(result)
+      const result: any[] = await userUseCases.getAll()
+      res.json(result)
     } catch (error) {
       const stringResp: String = String(error)
       res.status(500).send(stringResp)
     }
+})
+
+router.get("/talks", async (req: Request ,res: Response) => {
+  try {
+    const user = req.body.userid
+    const result: any[] = await userUseCases.getTalks(user)
+    res.json(result)
+  } catch (error) {
+    const stringResp: String = String(error)
+    res.status(500).send(stringResp)
+  }
 })
 
 router.post("/create", async (req: Request, res: Response) => {
