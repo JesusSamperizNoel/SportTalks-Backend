@@ -81,24 +81,22 @@ export default class UserRepositoryPostgres implements UserRepository {
     async getTalks(userid: Number): Promise<String[]> {
         try {            
             const talksUsers = await executeQuery(
-                `select name 
-                from users
-                where id = (
-                    select receiver
-                    from usermessages
-                    where transmitter = ${userid}       
-                )`
+                `
+                SELECT name
+                FROM users
+                INNER JOIN usermessages ON users.id = usermessages.receiver
+                where transmitter = ${userid}       
+                `
             )
             console.log(talksUsers);
             
             const talksGroups = await executeQuery(
-                `select name 
-                from groups
-                where id = (
-                    select group
-                    from groupusers
-                    where user = ${userid}
-                )`
+                `
+                SELECT name
+                FROM groups
+                INNER JOIN groupusers ON groups.id = groupusers.groupid
+                where userid = ${userid}
+                `
             )
             const talks = talksUsers.concat(talksGroups) //union of 2 array responses
             return talks;

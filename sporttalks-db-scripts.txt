@@ -29,15 +29,15 @@ create table groups (
 )
 
 create table groupUsers (
-	user bigint,
-	group bigint,
+	userid bigint,
+	groupid bigint,
 	primary key (group, user),
 	FOREIGN KEY (group) REFERENCES groups(id),
 	FOREIGN KEY (user) REFERENCES users(id)
 )
 
 create table groupMessages (
-	group bigint,
+	groupid bigint,
 	message bigint,
 	transmitter bigint,
 	primary key (group, message, transmitter),
