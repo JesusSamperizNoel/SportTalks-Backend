@@ -42,10 +42,10 @@ router.post("/create", async (req: Request, res: Response) => {
     const user: User = {
       name: req.body.name,
       password: req.body.password,
-      lastName: req.body.lastName,
+      lastName: req.body.surname,
       email: req.body.email,
       bornDate: req.body.bornDate,
-      sport: req.body.sport,
+      sport: req.body.sports,
       description: req.body.description
     }
     const result: Auth | String = await userUseCases.create(user)
