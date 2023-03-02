@@ -59,22 +59,27 @@ export default class MessageRepositoryPostgres implements MessageRepository {
         }
     }
 
-    async getUserMessages(transmitter: String, receiver: String): Promise<Message[]> {
-        const result: any[] = await executeQuery(
-            `select * from usermessages where transmitter = ${transmitter} and receiver = ${receiver}`
+    async getUserMessages(transmitter: String, receiver: String): Promise<String[]> {
+        const messagesId: any[] = await executeQuery(
+            `select message from usermessages where transmitter = ${transmitter} and receiver = ${receiver}`
         )
-        return result
+        const messageTexts: any[] = messagesId.map(async m => {
+            const text: any[] = await executeQuery(`select text from messages where id = ${m.message}`)          
+            return text[0].text
+        })
+        const texts = await Promise.all(messageTexts)
+        return texts
     }
 
-    async getGroupMessages(groupName: String): Promise<Message[]> {
-        const resId = await executeQuery(
-            `select id 
-            from groups 
-            where name = '${groupName}'`
-        )         
-        const result: any[] = await executeQuery(
-            `select * from groupmessages where groupid = ${resId[0].id}`
+    async getGroupMessages(transmitter: String, groupName: String): Promise<String[]> {
+        const messagesId: any[] = await executeQuery(
+            `select message from groupmessages where transmitter = ${transmitter} and groupid = ${groupName}`
         )
-        return result
+        const messageTexts: any[] = messagesId.map(async m => {
+            const text: any[] = await executeQuery(`select text from messages where id = ${m.message}`)          
+            return text[0].text
+        })
+        const texts = await Promise.all(messageTexts)
+        return texts
     }
 }

@@ -25,6 +25,10 @@ export default class UserUseCases {
     return this.userRepository.update(idUser, user);
   }
 
+  addUserTalkUser(user1: Number, user2: Number) {
+    return this.userRepository.addUserTalkUser(user1, user2)
+  }
+
   getTalks(userid: Number) {
     return this.userRepository.getTalks(userid);
   }

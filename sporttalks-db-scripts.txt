@@ -23,35 +23,43 @@ create table groups (
 	id serial,
 	name character varying (500),
 	sport character varying (20),
-	admin bigint,
+	admin integer,
 	primary key (id),
 	FOREIGN KEY (id) REFERENCES users(id)
 )
 
-create table groupUsers (
-	userid bigint,
-	groupid bigint,
+create table groupusers (
+	userid integer,
+	groupid integer,
 	primary key (group, user),
 	FOREIGN KEY (group) REFERENCES groups(id),
 	FOREIGN KEY (user) REFERENCES users(id)
 )
 
-create table groupMessages (
-	groupid bigint,
-	message bigint,
-	transmitter bigint,
+create table groupmessages (
+	groupid integer,
+	message integer,
+	transmitter integer,
 	primary key (group, message, transmitter),
 	FOREIGN KEY (group) REFERENCES groups(id),
 	FOREIGN KEY (message) REFERENCES messages(id),
 	FOREIGN KEY (transmitter) REFERENCES users(id)
 )
 
-create table userMessages (
-	message bigint,
-	transmitter bigint,
-	receiver bigint,
+create table usermessages (
+	message integer,
+	transmitter integer,
+	receiver integer,
 	primary key (message, transmitter, receiver),
 	FOREIGN KEY (message) REFERENCES messages(id),
 	FOREIGN KEY (transmitter) REFERENCES users(id),
 	FOREIGN KEY (receiver) REFERENCES users(id)
+)
+
+create table usertalkuser (
+	user1 integer,
+	user2 integer,
+	primary key (user1, user2),
+	FOREIGN KEY (user1) REFERENCES users(id),
+	FOREIGN KEY (user2) REFERENCES users(id)
 )

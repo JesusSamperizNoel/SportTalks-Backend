@@ -56,6 +56,18 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 })
 
+router.post("/usertalkuser", async (req: Request, res: Response) => {
+  try {
+    const user1 = req.body.user1
+    const user2 = req.body.user2
+    const result: String = await userUseCases.addUserTalkUser(user1, user2)
+    res.json(result)
+  } catch (error) {
+    const stringResp: String = String(error)
+    res.status(500).send(stringResp)
+  }
+})
+
 router.post("/login", async (req: Request, res: Response) => {
   try {
     const user: User = {

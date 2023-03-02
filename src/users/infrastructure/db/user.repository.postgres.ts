@@ -78,6 +78,18 @@ export default class UserRepositoryPostgres implements UserRepository {
         }
     }
 
+    async addUserTalkUser(user1: Number, user2: Number): Promise<String> {
+        try {
+            await executeQuery(
+                `insert into usertalkuser (user1, user2)
+                values (${user1}, ${user2})`
+            )
+            return "New talk started";
+        } catch {
+            return "Error starting new talk";
+        }
+    }
+
     async getTalks(userid: Number): Promise<String[]> {
         try {            
             const talksUsers = await executeQuery(

@@ -17,11 +17,11 @@ export default class MessageUseCases {
         return this.messageRepository.createMessageGroups(message, transmitter, groupReceiver)
     }
 
-    getUserMessages(transmitter: String, receiver: String): Promise <Message[]> {
+    getUserMessages(transmitter: String, receiver: String): Promise <String[]> {
         return this.messageRepository.getUserMessages(transmitter, receiver)
     }
     
-    getGroupMessages(group: String): Promise <Message[]> {
-        return this.messageRepository.getGroupMessages(group)
+    getGroupMessages(transmitter: String, group: String): Promise <String[]> {
+        return this.messageRepository.getGroupMessages(transmitter, group)
     }
 }

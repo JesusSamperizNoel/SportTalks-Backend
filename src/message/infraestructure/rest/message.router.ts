@@ -68,9 +68,10 @@ router.get("/user",async (req: Request, res: Response) => {
 
 router.get("/group",async (req: Request, res: Response) => {
     try {
-        const name: String = req.body.name
+        const transmitter: String = req.body.transmitter
+        const groupid: String = req.body.name
         //This petition function request is in the params of the url 
-        const result: any[] = await messageUseCases.getGroupMessages(name)
+        const result: any[] = await messageUseCases.getGroupMessages(transmitter, groupid)
         res.json(result)
     } catch (error) {
         const stringResp: String = String(error)
