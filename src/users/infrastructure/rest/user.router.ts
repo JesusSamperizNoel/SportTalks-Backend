@@ -42,7 +42,7 @@ router.post("/create", async (req: Request, res: Response) => {
     const user: User = {
       name: req.body.name,
       password: req.body.password,
-      lastName: req.body.surname,
+      surName: req.body.surName,
       email: req.body.email,
       bornDate: req.body.bornDate,
       sport: req.body.sports,

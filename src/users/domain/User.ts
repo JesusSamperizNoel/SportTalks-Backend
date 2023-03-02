@@ -2,7 +2,8 @@ export default interface User{
     id?: Number
     password: String
     name: String
-    lastName?: String
+    surName?: String
+    user?: String
     email?: String
     bornDate?: Date
     sport?: String //this is an select input of determined sport

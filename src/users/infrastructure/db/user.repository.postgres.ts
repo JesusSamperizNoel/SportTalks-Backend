@@ -11,11 +11,12 @@ export default class UserRepositoryPostgres implements UserRepository {
         try {
             if (user.name && user.password) {
                 await executeQuery(
-                    `insert into users(password, name, lastName, email, bornDate, sport, description)
+                    `insert into users(password, name, surName, user, email, bornDate, sport, description)
                     values (
                         '${hash(user.password)}',
                         '${user.name}',
-                        '${user.lastName}',
+                        '${user.surName}',
+                        '${user.user}',
                         '${user.email}',
                         '${user.bornDate}',
                         '${user.sport}',
@@ -51,7 +52,8 @@ export default class UserRepositoryPostgres implements UserRepository {
                         id: userFromDB.id,
                         name: userFromDB.name,
                         password: userFromDB.password,
-                        lastName: userFromDB.lastName,
+                        surName: userFromDB.lastName,
+                        user: userFromDB.user,
                         email: userFromDB.email,
                         bornDate: userFromDB.bornDate,
                         sport: userFromDB.sport,
