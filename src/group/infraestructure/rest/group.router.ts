@@ -15,7 +15,7 @@ const router = express.Router()
 const groupRepository: GroupRepository = new GroupRepositoryPostgres()
 const groupUseCases: GroupUseCases = new GroupUseCases(groupRepository)
 //Petitions:
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (res: Response) => {
   try {
     const result: any = await groupUseCases.getAll()
     res.json(result)

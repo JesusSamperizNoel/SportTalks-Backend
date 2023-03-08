@@ -11,15 +11,15 @@ export default class UserRepositoryPostgres implements UserRepository {
         try {
             if (user.name && user.password) {
                 await executeQuery(
-                    `insert into users(password, name, surName, user, email, bornDate, sport, description)
+                    `insert into users(password, name, surName, username, email, bornDate, sports, description)
                     values (
                         '${hash(user.password)}',
                         '${user.name}',
-                        '${user.surName}',
-                        '${user.user}',
+                        '${user.surname}',
+                        '${user.username}',
                         '${user.email}',
                         '${user.bornDate}',
-                        '${user.sport}',
+                        '${user.sports}',
                         '${user.description}'
                     )`
                 )
@@ -29,6 +29,13 @@ export default class UserRepositoryPostgres implements UserRepository {
             console.error(String(error))
             return 'The necessary data has not been correctly provided'
         }     
+    }
+
+    async getUser(userid: Number): Promise<User> {
+        const result: any[] = await executeQuery(
+            `select * from users where id = ${userid}`
+        )
+        return result[0]
     }
 
     async getAll(): Promise<User[]> {
@@ -52,11 +59,11 @@ export default class UserRepositoryPostgres implements UserRepository {
                         id: userFromDB.id,
                         name: userFromDB.name,
                         password: userFromDB.password,
-                        surName: userFromDB.lastName,
-                        user: userFromDB.user,
+                        surname: userFromDB.surname,
+                        username: userFromDB.user,
                         email: userFromDB.email,
                         bornDate: userFromDB.bornDate,
-                        sport: userFromDB.sport,
+                        sports: userFromDB.sports,
                         description: userFromDB.description
                     }            
                 return userOK
@@ -102,7 +109,6 @@ export default class UserRepositoryPostgres implements UserRepository {
                 where transmitter = ${userid}       
                 `
             )
-            console.log(talksUsers);
             
             const talksGroups = await executeQuery(
                 `

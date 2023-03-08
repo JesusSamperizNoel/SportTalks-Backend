@@ -4,6 +4,6 @@ export default interface Group {
     id?: Number
     name: String
     sport: String
-    admin: String
+    admin: Number
     users?: User[]
 }

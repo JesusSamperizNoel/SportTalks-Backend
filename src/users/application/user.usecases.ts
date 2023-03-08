@@ -13,6 +13,10 @@ export default class UserUseCases {
     return this.userRepository.create(user);
   }
 
+  getUser(userid: Number) {
+    return this.userRepository.getUser(userid);
+  }
+
   getAll() {
     return this.userRepository.getAll();
   }

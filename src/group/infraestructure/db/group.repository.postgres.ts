@@ -19,7 +19,7 @@ export default class GroupRepositoryPostgres implements GroupRepository {
                 )
             }
             return `Group: ${group.name}, has been created successfully`            
-        } catch (error) {
+        } catch (error) {            
             return 'The necessary data has not been correctly provided'
         }     
     }

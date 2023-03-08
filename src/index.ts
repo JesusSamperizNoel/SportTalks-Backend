@@ -7,7 +7,7 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT
 app.use(express.json())
-const allowedOrigins = ["*"]
+const allowedOrigins = ["http://localhost:3000"]
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };

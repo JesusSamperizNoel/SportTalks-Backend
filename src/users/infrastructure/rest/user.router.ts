@@ -16,7 +16,18 @@ const router = express.Router()
 const userRepository: UserRepository = new UserRepositoryPostgres
 const userUseCases: UserUseCases = new UserUseCases(userRepository)
 //Petitions:
-router.get("/", async (req: Request ,res: Response) => {
+router.get("/:userid", async (req: Request ,res: Response) => {
+  try {
+    const user = req.params.userid
+    const result = await userUseCases.getUser(Number(user))
+    res.json(result)
+  } catch (error) {
+    const stringResp: String = String(error)
+    res.status(500).send(stringResp)
+  }
+})
+
+router.get("/", async (res: Response) => {
     try {
       const result: any[] = await userUseCases.getAll()
       res.json(result)
@@ -26,10 +37,10 @@ router.get("/", async (req: Request ,res: Response) => {
     }
 })
 
-router.get("/talks", async (req: Request ,res: Response) => {
+router.get("/talks/:userid", async (req: Request ,res: Response) => {
   try {
-    const user = req.body.userid
-    const result: any[] = await userUseCases.getTalks(user)
+    const user = req.params.userid
+    const result: any[] = await userUseCases.getTalks(Number(user))
     res.json(result)
   } catch (error) {
     const stringResp: String = String(error)
@@ -42,12 +53,15 @@ router.post("/create", async (req: Request, res: Response) => {
     const user: User = {
       name: req.body.name,
       password: req.body.password,
-      surName: req.body.surName,
+      surname: req.body.surname,
+      username: req.body.username,
       email: req.body.email,
       bornDate: req.body.bornDate,
-      sport: req.body.sports,
+      sports: req.body.sports,
       description: req.body.description
     }
+    console.log(req.body.sports);
+    
     const result: Auth | String = await userUseCases.create(user)
     res.json(result)
   } catch (error) {
@@ -77,7 +91,12 @@ router.post("/login", async (req: Request, res: Response) => {
     const loginOK = await userUseCases.login(user)
     if (loginOK) {      
       const token = createToken(loginOK)
-      res.json({token})
+      res.json(
+        {
+          id: loginOK.id,
+          token: token
+        }
+      )
     } else {
       res.status(404).send('user not registered on the platform')
     }
