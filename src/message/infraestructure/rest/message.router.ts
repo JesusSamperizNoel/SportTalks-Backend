@@ -53,10 +53,10 @@ router.post("/create/messageGroups",async (req: Request, res: Response) => {
     }
 })
 
-router.get("/user",async (req: Request, res: Response) => {
+router.get("/user/:t/:r",async (req: Request, res: Response) => {
     try {
-        const transmitter: String = req.body.transmitter
-        const receiver: String = req.body.receiver        
+        const transmitter: String = req.params.t
+        const receiver: String = req.params.r    
         //This petition function request is in the body 
         const result: any[] = await messageUseCases.getUserMessages(transmitter, receiver)
         res.json(result)
@@ -66,10 +66,10 @@ router.get("/user",async (req: Request, res: Response) => {
     }
 })
 
-router.get("/group",async (req: Request, res: Response) => {
+router.get("/group/:t/:g",async (req: Request, res: Response) => {
     try {
-        const transmitter: String = req.body.transmitter
-        const groupid: String = req.body.name
+        const transmitter: String = req.params.t
+        const groupid: String = req.params.g
         //This petition function request is in the params of the url 
         const result: any[] = await messageUseCases.getGroupMessages(transmitter, groupid)
         res.json(result)

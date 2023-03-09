@@ -51,9 +51,9 @@ export default class UserRepositoryPostgres implements UserRepository {
                 const result: any[] = await executeQuery(`
                         select * 
                         from users 
-                        where name = '${user.name}'
+                        where username = '${user.name}'
                     `)
-                const userFromDB = result[0]
+                const userFromDB = result[0]                
                 if (userFromDB && compare(user.password, userFromDB.password)) {
                     const userOK : User = {
                         id: userFromDB.id,
@@ -65,7 +65,7 @@ export default class UserRepositoryPostgres implements UserRepository {
                         bornDate: userFromDB.bornDate,
                         sports: userFromDB.sports,
                         description: userFromDB.description
-                    }            
+                    }                                
                 return userOK
             }
         } 
@@ -101,28 +101,34 @@ export default class UserRepositoryPostgres implements UserRepository {
 
     async getTalks(userid: Number): Promise<String[]> {
         try {            
-            const talksUsers = await executeQuery(
+            const talksUsers: any[] = await executeQuery(
                 `
-                SELECT name
+                SELECT name, id
                 FROM users
-                INNER JOIN usermessages ON users.id = usermessages.receiver
+                INNER JOIN usertalkuser ON users.id = usertalkuser.receiver
                 where transmitter = ${userid}       
                 `
             )
-            
-            const talksGroups = await executeQuery(
+            talksUsers.forEach((t) => {
+                t.type = 'user'
+            })
+
+            const talksGroups: any[] = await executeQuery(
                 `
-                SELECT name
+                SELECT name, id
                 FROM groups
                 INNER JOIN groupusers ON groups.id = groupusers.groupid
                 where userid = ${userid}
                 `
             )
-            const talks = talksUsers.concat(talksGroups) //union of 2 array responses
+            talksGroups.forEach((t) => {
+                t.type = 'group'
+            })
+
+            const talks = talksUsers.concat(talksGroups) //union of 2 array responses           
             return talks;
         } catch (error) {
             console.error(String(error));
-            
             return ["failed"];
         }
     }

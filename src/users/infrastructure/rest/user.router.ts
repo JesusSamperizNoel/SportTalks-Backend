@@ -27,9 +27,9 @@ router.get("/:userid", async (req: Request ,res: Response) => {
   }
 })
 
-router.get("/", async (res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
     try {
-      const result: any[] = await userUseCases.getAll()
+      const result: any = await userUseCases.getAll()
       res.json(result)
     } catch (error) {
       const stringResp: String = String(error)
@@ -40,7 +40,7 @@ router.get("/", async (res: Response) => {
 router.get("/talks/:userid", async (req: Request ,res: Response) => {
   try {
     const user = req.params.userid
-    const result: any[] = await userUseCases.getTalks(Number(user))
+    const result: any = await userUseCases.getTalks(Number(user))
     res.json(result)
   } catch (error) {
     const stringResp: String = String(error)
@@ -59,9 +59,7 @@ router.post("/create", async (req: Request, res: Response) => {
       bornDate: req.body.bornDate,
       sports: req.body.sports,
       description: req.body.description
-    }
-    console.log(req.body.sports);
-    
+    }    
     const result: Auth | String = await userUseCases.create(user)
     res.json(result)
   } catch (error) {
@@ -87,9 +85,9 @@ router.post("/login", async (req: Request, res: Response) => {
     const user: User = {
       name: req.body.name,
       password: req.body.password
-    };
+    }
     const loginOK = await userUseCases.login(user)
-    if (loginOK) {      
+    if (loginOK) {
       const token = createToken(loginOK)
       res.json(
         {
