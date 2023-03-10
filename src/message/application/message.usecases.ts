@@ -21,7 +21,7 @@ export default class MessageUseCases {
         return this.messageRepository.getUserMessages(transmitter, receiver)
     }
     
-    getGroupMessages(transmitter: String, group: String): Promise <String[]> {
-        return this.messageRepository.getGroupMessages(transmitter, group)
+    getGroupMessages(group: String): Promise <String[]> {
+        return this.messageRepository.getGroupMessages(group)
     }
 }

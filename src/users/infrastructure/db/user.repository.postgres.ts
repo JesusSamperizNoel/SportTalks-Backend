@@ -45,6 +45,13 @@ export default class UserRepositoryPostgres implements UserRepository {
         return result
     }
 
+    async getFromPattern(pattern: String): Promise<User[]> {
+        const result: any[] = await executeQuery(
+            `select * from users where name like '%${pattern}%'`
+        )
+        return result
+    }
+
     async login(user: User): Promise<User | undefined> {
         try {
             if (user.name && user.password) {

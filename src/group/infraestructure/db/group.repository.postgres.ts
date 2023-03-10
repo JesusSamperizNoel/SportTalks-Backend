@@ -31,16 +31,23 @@ export default class GroupRepositoryPostgres implements GroupRepository {
         return result
     }
 
+    async getFromPattern(pattern: String): Promise<Group[]> {        
+        const result: any[] = await executeQuery(
+            `select * from groups where name like'%${pattern}%'`
+        )        
+        return result
+    }
+
     async addUser(userid: Number, groupid: String): Promise<String> {      
         const groupidRes = await executeQuery(
             `select id 
             from groups 
             where name = '${groupid}'`
-        )        
+        )
         const newUserGroup = await executeQuery(
             `insert into groupusers (userid, groupid)
-            values (${userid}, ${groupidRes[0].id})`
-        )
+            values (${Number(userid)}, ${Number(groupidRes[0].id)})`
+        )        
         if (newUserGroup) {
             return "User added to "+groupid
         } else {

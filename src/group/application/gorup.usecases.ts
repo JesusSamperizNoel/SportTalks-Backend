@@ -17,6 +17,10 @@ export default class GroupUseCases {
         return await this.groupRepository.getAll()
     }
 
+    async getFromPattern (pattern: String) {
+        return await this.groupRepository.getFromPattern(pattern)
+    }
+
     async addUser (userid: Number, group: String) {
         return await this.groupRepository.addUser(userid, group)
     }

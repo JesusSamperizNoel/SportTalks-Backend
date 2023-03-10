@@ -71,9 +71,9 @@ export default class MessageRepositoryPostgres implements MessageRepository {
         return texts
     }
 
-    async getGroupMessages(transmitter: String, groupName: String): Promise<String[]> {
+    async getGroupMessages(groupName: String): Promise<String[]> {
         const messagesId: any[] = await executeQuery(
-            `select message from groupmessages where transmitter = ${transmitter} and groupid = ${groupName}`
+            `select message from groupmessages where groupid = ${groupName}`
         )
         const messageTexts: any[] = messagesId.map(async m => {
             const text: any[] = await executeQuery(`select text from messages where id = ${m.message}`)          

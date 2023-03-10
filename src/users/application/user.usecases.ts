@@ -21,6 +21,10 @@ export default class UserUseCases {
     return this.userRepository.getAll();
   }
 
+  getFromPattern(pattern: String) {
+    return this.userRepository.getFromPattern(pattern);
+  }
+
   login(user: User): Promise<User | undefined> {
     return this.userRepository.login(user);
   }

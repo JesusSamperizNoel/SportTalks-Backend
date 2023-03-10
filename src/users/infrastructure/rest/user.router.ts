@@ -37,6 +37,17 @@ router.get("/", async (req: Request, res: Response) => {
     }
 })
 
+router.get("/pattern/:pattern", async (req: Request, res: Response) => {
+  try {
+    const pattern = req.params.pattern
+    const result: any = await userUseCases.getFromPattern(pattern)
+    res.json(result)
+  } catch (error) {
+    const stringResp: String = String(error)
+    res.status(500).send(stringResp)
+  }
+})
+
 router.get("/talks/:userid", async (req: Request ,res: Response) => {
   try {
     const user = req.params.userid
