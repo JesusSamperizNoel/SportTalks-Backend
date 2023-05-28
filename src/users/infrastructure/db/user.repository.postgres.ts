@@ -47,7 +47,7 @@ export default class UserRepositoryPostgres implements UserRepository {
 
     async getFromPattern(pattern: String): Promise<User[]> {
         const result: any[] = await executeQuery(
-            `select * from users where name like '%${pattern}%'`
+            `SELECT * FROM users WHERE LOWER(name) LIKE '%${pattern.toLowerCase()}%'`
         )
         return result
     }
@@ -97,7 +97,7 @@ export default class UserRepositoryPostgres implements UserRepository {
     async addUserTalkUser(user1: Number, user2: Number): Promise<String> {
         try {
             await executeQuery(
-                `insert into usertalkuser (user1, user2)
+                `insert into usertalkuser (transmitter, receiver)
                 values (${user1}, ${user2})`
             )
             return "New talk started";

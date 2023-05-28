@@ -5,8 +5,6 @@ import User from "../../users/domain/User";
 const SECRET_KEY: Secret = "mySecretKey"
 
 const createToken = (usuario: User): string => {
-  console.log(usuario)
-  
   const payload = {
     usuario: {
       id: usuario.id,

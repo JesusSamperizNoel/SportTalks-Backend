@@ -6,9 +6,6 @@ import GroupRepository from "../../domain/group.repository";
 import GroupRepositoryPostgres from "../db/group.repository.postgres";
 //domain
 import Group from "../../domain/Group";
-//context:
-import { isAuth } from "../../../context/security/auth";
-import Auth from "../../../users/domain/Auth";
 //Router:
 const router = express.Router()
 //Implementation
