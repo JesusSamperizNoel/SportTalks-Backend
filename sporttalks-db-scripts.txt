@@ -1,5 +1,7 @@
 -->Este documento contiene los scripts necesarios para crear 
-una base de datos con la estructura correcta y necesaria
+una base de datos con la estructura correcta y necesaria para 
+el proyecto empresarial de SportTalks  
+
 
 create table users (
 	id serial,
