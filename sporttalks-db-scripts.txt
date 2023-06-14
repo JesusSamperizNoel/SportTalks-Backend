@@ -59,9 +59,9 @@ create table usermessages (
 )
 
 create table usertalkuser (
-	user1 integer,
-	user2 integer,
-	primary key (user1, user2),
-	FOREIGN KEY (user1) REFERENCES users(id),
-	FOREIGN KEY (user2) REFERENCES users(id)
+	transmitter integer,
+	receiver integer,
+	primary key (transmitter, receiver),
+	FOREIGN KEY (transmitter) REFERENCES users(id),
+	FOREIGN KEY (receiver) REFERENCES users(id)
 )

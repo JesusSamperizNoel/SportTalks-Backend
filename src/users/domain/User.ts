@@ -5,7 +5,7 @@ export default interface User{
     surname?: String
     username?: String
     email?: String
-    bornDate?: Date
+    borndate?: Date
     sports?: String //this is an select input of determined sport
     description?: String
     talks?: String[] //here are stored groups and users

@@ -67,7 +67,7 @@ router.post("/create", async (req: Request, res: Response) => {
       surname: req.body.surname,
       username: req.body.username,
       email: req.body.email,
-      bornDate: req.body.bornDate,
+      borndate: req.body.borndate,
       sports: req.body.sports,
       description: req.body.description
     }    
